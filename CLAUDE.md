@@ -46,6 +46,8 @@ GitHub Actions (`docker-publish.yml`) により、main ブランチへの push �
 2. ghcr.io にプッシュ (タグ: `main`, `main-<commit-sha>`, `latest`)
 3. GitHub Actions キャッシュでビルド時間を最適化
 
+**セキュリティ**: すべての GitHub Actions は SHA ハッシュでピン留めされています（セキュリティベストプラクティス）
+
 ## 開発コマンド
 
 ### ローカル開発
@@ -66,6 +68,9 @@ curl http://localhost:8080/
 ```bash
 # 全テストを実行
 go test -v ./...
+
+# 単一のテストを実行
+go test -v -run TestHandleHealth ./...
 
 # カバレッジを確認
 go test -cover ./...
@@ -110,11 +115,11 @@ Docker コンテナは非 root ユーザー (appuser, UID 1000) で実行され�
 - ✅ Echo サーバー実装 (main.go)
 - ✅ テストスイート実装 (main_test.go)
 - ✅ .gitignore 設定
+- ✅ Dockerfile と .dockerignore の作成（マルチステージビルド実装）
+- ✅ GitHub Actions ワークフロー設定（SHA pinning 実装済み）
 
 ### 計画段階 (tasks/ ディレクトリ参照)
 
-- ⏳ Dockerfile と .dockerignore の作成 (タスク 003)
-- ⏳ GitHub Actions ワークフロー設定 (タスク 004)
 - ⏳ AppRun デプロイメント手順 (タスク 005)
 
 新しい機能を追加する際は、tasks/ ディレクトリ内のタスクファイルを参照してください。
